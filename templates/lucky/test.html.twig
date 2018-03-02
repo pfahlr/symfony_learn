@@ -1,0 +1,11 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1>{{ title }}</h1>
+    <ul class="content">
+     {% for item in content %}
+        <li>{{ item }}</li>
+     {% endfor %}
+    </ul>
+<img src="{{ asset('build/images/black-hole.jpg') }}" width="300px"/>
+{% endblock %}
