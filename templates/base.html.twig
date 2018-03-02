@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+        {% endblock %}
+    </head>
+    <body>
+      <div class="container">
+        {# pass a string argument to get only the messages of that type #}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+        <script src="{{ asset('build/js/app.js') }}"></script>
+        {% endblock %}
+      </div>
+    </body>
+</html>

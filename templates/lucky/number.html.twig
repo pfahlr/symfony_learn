@@ -1,0 +1,12 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1>Your lucky number is {{ number }}</h1>
+  <ul>
+  {% for i in list %}
+    <li>{{ i }}</li>
+  {% endfor %}
+  </ul>
+  <a href="{{ path('lucky')}}">lucky</a>
+  <img src="{{ asset('build/images/black-hole.jpg') }}" width="300px"/>
+{% endblock %}
