@@ -93,18 +93,20 @@ class LuckyController extends Controller
    * @Route("lucky/request_response", name="lucky_request_response")
    */
   public function lucky_request_response(Request $request){
-     $content[] = 'is AJAX?:'.$request->isXmlHttpRequest();
-     $content[] = 'preferred language:'.$request->getPreferredLanguage(array('en', 'fr'));
-     $content[] = '$_GET[page]'.$request->query->get('page');
-     $content[] = '$_POST[page]'.$request->request->get('page');
-     $content[] = '$_SERVER[http_host]'.$request->server->get('http_host');
-     $content[] = '$_FILES[]'.$request->files->get('foo');
-     $content[] = 'cookie - PHPSESSID'.$request->cookies->get('PHPSESSID');
-     $content[] = 'header-host'.$request->headers->get('host');
-     $content[] = 'header-content type'.$request->headers->get('content_type');
-     $menu = $this->get_nav();
-
-     return $this->render('lucky/test.html.twig', ['content'=>$content,'title'=>'Request Data','menu'=>$menu]);
+    $content[] = 'is AJAX?:'.$request->isXmlHttpRequest();
+    $content[] = 'preferred language:'.$request->getPreferredLanguage(array('en', 'fr'));
+    $content[] = '$_GET[page]'.$request->query->get('page');
+    $content[] = '$_POST[page]'.$request->request->get('page');
+    $content[] = '$_SERVER[http_host]'.$request->server->get('http_host');
+    $content[] = '$_FILES[]'.$request->files->get('foo');
+    $content[] = 'cookie - PHPSESSID'.$request->cookies->get('PHPSESSID');
+    $content[] = 'header-host'.$request->headers->get('host');
+    $content[] = 'header-content type'.$request->headers->get('content_type');
+    /*
+    dump($request);
+    var_dump($request);
+    */
+    return $this->render('lucky/test.html.twig', ['content'=>$content,'title'=>'Request Data']);
 
   }
 
@@ -112,17 +114,17 @@ class LuckyController extends Controller
    * @Route("lucky/response_type",name="lucky_response_type")
    */
   public function lucky_response_type(){
-      $content = "
-      Normal
-      line break
-      delimited 
-      text 
-      file 
-      ";
-      $response = new Response($content);
-      $response->headers->set('Content-Type','text/css');
+    $content = "
+    Normal
+    line break
+    delimited 
+    text 
+    file 
+    ";
+    $response = new Response($content);
+    $response->headers->set('Content-Type','text/css');
 
-      return $response;
+    return $response;
   }
   /**
    * @Route("lucky/json", name="lucky_json")
@@ -141,7 +143,15 @@ class LuckyController extends Controller
       return $this->file('/home/rick/Downloads/The Golden Book Of Chemistry Experiments.pdf');
   }
 
-  private function get_nav() {
+    /**
+     * @Route("lucky/navigation", name="lucky_nav")
+     */
+  public function luckyNavAction() {
+      $menu = $this->_get_nav();
+      return $this->render('includes/nav.html.twig', ['menu'=>$menu]);
+  }
+
+  private function _get_nav() {
       $router = $this->container->get('router');
       /** @var $collection \Symfony\Component\Routing\RouteCollection */
       $collection = $router->getRouteCollection();
@@ -159,5 +169,5 @@ class LuckyController extends Controller
       $menu = array_filter($menu, function($value){return !empty($value);});
 
       return $menu;
-  }
+    }
 }

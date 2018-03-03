@@ -3,7 +3,6 @@
 {% block title %}{{ title }} - {{ parent() }}{% endblock %}
 {% block body %}
 <h1>{{ title }}</h1>
-    {% include 'includes/nav.html.twig' %}
     <div class="row">
         <div class="col-md-4">
             <ul class="content">
@@ -11,6 +10,16 @@
             <li>{{ item }}</li>
             {% endfor %}
             </ul>
+
+            <ul>
+                <li><a href="{{ path('lucky_number', {'number':18}) }}">lucky/number/18</a></li>
+                <li><a href="{{ path('lucky_number', {'number':99}) }}">lucky/number/99</a></li>
+
+            </ul>
+            {% if app.debug %}
+                <p>Request method: {{ app.request.method }}</p>
+                <p>Application Environment: {{ app.environment }}</p>
+            {% endif %}
         </div>
         <div class="col-md-8">
             <img class="img-responsive" src="{{ asset('build/images/neptune.png') }}"/>
