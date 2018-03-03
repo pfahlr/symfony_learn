@@ -95,15 +95,16 @@ class LuckyController extends Controller
   public function lucky_request_response(Request $request){
      $content[] = 'is AJAX?:'.$request->isXmlHttpRequest();
      $content[] = 'preferred language:'.$request->getPreferredLanguage(array('en', 'fr'));
-     $content[] = '$_GET[\'page\']'.$request->query->get('page');
-     $content[] = '$_POST[\'page\']'.$request->request->get('page');
+     $content[] = '$_GET[page]'.$request->query->get('page');
+     $content[] = '$_POST[page]'.$request->request->get('page');
      $content[] = '$_SERVER[http_host]'.$request->server->get('http_host');
      $content[] = '$_FILES[]'.$request->files->get('foo');
      $content[] = 'cookie - PHPSESSID'.$request->cookies->get('PHPSESSID');
      $content[] = 'header-host'.$request->headers->get('host');
      $content[] = 'header-content type'.$request->headers->get('content_type');
+     $menu = $this->get_nav();
 
-     return $this->render('lucky/test.html.twig', ['content'=>$content,'title'=>'Request Data']);
+     return $this->render('lucky/test.html.twig', ['content'=>$content,'title'=>'Request Data','menu'=>$menu]);
 
   }
 
@@ -127,7 +128,9 @@ class LuckyController extends Controller
    * @Route("lucky/json", name="lucky_json")
    */
   public function lucky_json() {
-    return $this->json(['array'=>'value','another'=>'value', 'yet'=>['another','array','of','values']]);
+      $menu = $this->get_nav();
+
+      return $this->json(['array'=>'value','another'=>'value', 'yet'=>['another','array','of','values']]);
   }
 
   /**
@@ -136,5 +139,25 @@ class LuckyController extends Controller
    */
   public function lucky_download() {
       return $this->file('/home/rick/Downloads/The Golden Book Of Chemistry Experiments.pdf');
+  }
+
+  private function get_nav() {
+      $router = $this->container->get('router');
+      /** @var $collection \Symfony\Component\Routing\RouteCollection */
+      $collection = $router->getRouteCollection();
+      $allRoutes = $collection->all();
+
+      $menu = array_map(function($obj,$key){
+
+          if($key && strstr($obj->getDefault('_controller'),'LuckyController')) {
+              //var_dump( 'key:'.$key.' - '.$obj->getPath());
+              return (['key'=>$key, 'path'=>$obj->getPath()]);
+          }
+
+      }, $allRoutes, array_keys($allRoutes));
+
+      $menu = array_filter($menu, function($value){return !empty($value);});
+
+      return $menu;
   }
 }

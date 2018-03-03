@@ -1,0 +1,11 @@
+{%  if menu is defined %}
+    <ul class="nav nav-pills">
+        {% for item in menu  %}
+            <li class="
+                {{ cycle(['even','odd'],loop.index) }}
+                {{ item.key ==app.request.get('_route')?'active':'' }}">
+                <a href="{{ path(item.key) }}">{{item.key | upper}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

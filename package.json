@@ -16,6 +16,7 @@
         "bootstrap": "^4.0.0",
         "bootstrap-sass": "^3.3.7",
         "jquery": "^3.3.1",
+        "npm": "^5.7.1",
         "popper.js": "^1.12.9"
     }
 }

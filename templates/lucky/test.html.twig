@@ -1,11 +1,27 @@
 {# templates/lucky/number.html.twig #}
 {% extends 'base.html.twig' %}
+{% block title %}{{ title }} - {{ parent() }}{% endblock %}
 {% block body %}
 <h1>{{ title }}</h1>
-    <ul class="content">
-     {% for item in content %}
-        <li>{{ item }}</li>
-     {% endfor %}
-    </ul>
-<img src="{{ asset('build/images/black-hole.jpg') }}" width="300px"/>
+    {% include 'includes/nav.html.twig' %}
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="content">
+            {% for item in content %}
+            <li>{{ item }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <img class="img-responsive" src="{{ asset('build/images/neptune.png') }}"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+        <img class="img-responsive" src="{{ asset('build/images/black-hole.jpg') }}" />
+        </div>
+    </div>
 {% endblock %}
